@@ -5,15 +5,12 @@ function MainWeather(props) {
     return(
         <div className="weather-main">
             <div className="weather-icon">
-                <i className={`wi ${props.weather.icon}`}></i>
+                <i className={`wi ${props.icon}`}></i>
             </div>
             <div className="weather-info">
                 <div className="date">
                     {props.date}
-                </div>
-                <div className="description">
-                    {props.weather.description}
-                </div>
+                </div>                
                 <div className="temperature">
                     {props.temperature}°C
                 </div>

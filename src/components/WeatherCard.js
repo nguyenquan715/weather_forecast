@@ -5,7 +5,7 @@ function WeatherCard(props) {
     return(
         <div className="weather-card">
             <div className="weather-icon">
-                <i className={`wi ${props.weather.icon}`}></i>
+                <i className={`wi ${props.icon}`}></i>
             </div>
             <div className="weather-info">
                 <div className="date">
