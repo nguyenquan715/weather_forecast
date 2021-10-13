@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+.weather-board{        
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    .weather-list{
+        width: 80%;     
+        margin-top: 30px;
+        display: flex;              
+        flex-wrap: wrap;
+    }
+}

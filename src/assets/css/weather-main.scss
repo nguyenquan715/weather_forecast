@@ -1,0 +1,17 @@
+.weather-main{    
+    width: 80%; 
+    margin: auto;
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    .weather-icon{
+        text-align: center;
+        font-size: 100px;
+        color: purple;    
+    }
+    .weather-info{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        font-size: 15px;
+    }
+}

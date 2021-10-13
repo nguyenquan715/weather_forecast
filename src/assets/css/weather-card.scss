@@ -1,0 +1,18 @@
+.weather-card{
+    width: 19%;
+    margin-bottom: 10px;
+    margin-right: 10px;    
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    .weather-icon{
+        text-align: center;
+        font-size: 50px;
+        color: purple;    
+    }
+    .weather-info{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        font-size: 15px;
+    }
+}
