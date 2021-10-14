@@ -13,7 +13,7 @@ function WeatherBoard(props) {
     const [currentWeather, setCurrentWeather] = useState({});
     const backgroundColor = useSelector(selectBackgroundColor);
     const dispatch = useDispatch();  
-    //Call api at first render
+    
     useEffect(() => {
         WeatherApi.getWeatherForecast()
         .then((response) => { 
