@@ -8,7 +8,10 @@
     top: 0;
     bottom: 0; 
     padding-top: 50px;
-    overflow: auto;   
+    overflow: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; 
     .weather-list{
         width: 80%; 
         margin: auto;    

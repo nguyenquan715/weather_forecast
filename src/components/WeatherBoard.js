@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { WeatherApi } from '../app/api/weather.api';
 import { WEATHER } from '../constants/weather';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectBackgroundColor, setBackgroundColor } from './../app/weatherSlice';
+import { selectBackground, setBackground } from './../app/weatherSlice';
 
 
 function WeatherBoard(props) {
     const [weatherForecastInfo, setWeatherForecastInfo] = useState([]);
     const [currentWeather, setCurrentWeather] = useState({});
-    const backgroundColor = useSelector(selectBackgroundColor);
+    const background = useSelector(selectBackground);
     const dispatch = useDispatch();  
     
     useEffect(() => {
@@ -32,7 +32,7 @@ function WeatherBoard(props) {
             setWeatherForecastInfo(mockWeatherForecast);
             const weather = setWeather(mockWeatherForecast[0]);
             setCurrentWeather(weather);            
-            dispatch(setBackgroundColor(weather['background']));            
+            dispatch(setBackground(weather['background']));            
         })
         .catch((err) => {
             console.log(err);                
@@ -43,7 +43,7 @@ function WeatherBoard(props) {
         let weatherRaw = weatherForecastInfo[index];
         const weather = setWeather(weatherRaw);
         setCurrentWeather(weather);
-        dispatch(setBackgroundColor(weather['background']));
+        dispatch(setBackground(weather['background']));
     }    
 
     const weatherList = [];    
@@ -53,7 +53,7 @@ function WeatherBoard(props) {
         weatherList.push(<WeatherCard key={`${weatherRaw['main']}-${i}`} index={i} icon={weather.icon} date={weather.date} temperature={weather.temperature} onClick={(index) => handleClick(index)}/>);        
     }    
     return(
-        <div className="weather-board" style={{backgroundColor: backgroundColor}}>
+        <div className="weather-board" style={{backgroundImage: `url(${background})`}}>
             {currentWeather && <MainWeather icon={currentWeather.icon} date={currentWeather.date} temperature={currentWeather.temperature} description={currentWeather.description}/>}
             <div className="weather-list">
                 {weatherList}                             

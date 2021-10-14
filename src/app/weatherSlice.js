@@ -1,22 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    backgroundColor: 'white',
+    background: '',
 };
 
 export const weatherSlice = createSlice({
   name: 'weather',
   initialState,  
   reducers: {
-    setBackgroundColor: (state, action) => { 
-        console.log(state.backgroundColor); 
-        state.backgroundColor = action.payload;
+    setBackground: (state, action) => {         
+        state.background = action.payload;
     },    
   },  
 });
 
-export const { setBackgroundColor } = weatherSlice.actions;
+export const { setBackground } = weatherSlice.actions;
 
-export const selectBackgroundColor = (state) => state.weather.backgroundColor;
+export const selectBackground = (state) => state.weather.background;
 
 export default weatherSlice.reducer;
