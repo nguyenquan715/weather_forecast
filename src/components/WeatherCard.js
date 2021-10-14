@@ -3,7 +3,7 @@ import '../assets/css/weather-icons.min.css';
 
 function WeatherCard(props) {
     return(
-        <div className="weather-card">
+        <div className="weather-card" onClick={() => props.onClick(props.index)}>
             <div className="weather-icon">
                 <i className={`wi ${props.icon}`}></i>
             </div>

@@ -1,13 +1,17 @@
 *{
     box-sizing: border-box;
 }
-.weather-board{        
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
+.weather-board{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    bottom: 0; 
+    padding-top: 50px;
+    overflow: auto;   
     .weather-list{
-        width: 80%;     
+        width: 80%; 
+        margin: auto;    
         margin-top: 30px;
         display: flex;              
         flex-wrap: wrap;

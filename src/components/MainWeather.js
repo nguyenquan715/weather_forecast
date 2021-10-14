@@ -10,6 +10,9 @@ function MainWeather(props) {
             <div className="weather-info">
                 <div className="date">
                     {props.date}
+                </div>
+                <div className="weather-description">
+                    {props.description}
                 </div>                
                 <div className="temperature">
                     {props.temperature}°C

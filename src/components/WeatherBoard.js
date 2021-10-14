@@ -2,19 +2,17 @@ import WeatherCard from './WeatherCard';
 import MainWeather from './MainWeather';
 import '../assets/css/weather-board.scss';
 import { useEffect, useState } from 'react';
-import { WeatherApi } from '../app/api/weather';
+import { WeatherApi } from '../app/api/weather.api';
 import { WEATHER } from '../constants/weather';
-import counterSlice from '../features/counter/counterSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectBackgroundColor, setBackgroundColor } from './../app/weatherSlice';
 
 
 function WeatherBoard(props) {
     const [weatherForecastInfo, setWeatherForecastInfo] = useState([]);
-    const [currentWeather, setCurrentWeather] = useState({
-        icon: 'wi-day-sunny',
-        date: '13/10/2021',
-        temperature: 21,
-        description: 'Sunny'
-    });    
+    const [currentWeather, setCurrentWeather] = useState({});
+    const backgroundColor = useSelector(selectBackgroundColor);
+    const dispatch = useDispatch();  
     //Call api at first render
     useEffect(() => {
         WeatherApi.getWeatherForecast()
@@ -32,54 +30,55 @@ function WeatherBoard(props) {
             }
             console.log(mockWeatherForecast);
             setWeatherForecastInfo(mockWeatherForecast);
+            const weather = setWeather(mockWeatherForecast[0]);
+            setCurrentWeather(weather);            
+            dispatch(setBackgroundColor(weather['background']));            
         })
         .catch((err) => {
             console.log(err);                
         });
-    }, []);
+    }, [dispatch]);
 
-    const handleClick = (index) => {
+    const handleClick = (index) => {        
         let weatherRaw = weatherForecastInfo[index];
         const weather = setWeather(weatherRaw);
         setCurrentWeather(weather);
+        dispatch(setBackgroundColor(weather['background']));
     }    
 
     const weatherList = [];    
     for(let i=0; i<weatherForecastInfo.length; i++) { 
         let weatherRaw = weatherForecastInfo[i];
-        const weather = setWeather(weatherRaw);
-        console.log(weather);
-        if(i === 0) {
-            setCurrentWeather(weather);
-        }
-        else{
-            weatherList.push(<WeatherCard key={i} index={i} icon={weather.icon} date={weather.date} temperature={weather.temperature}/>);
-        }
-    }
+        const weather = setWeather(weatherRaw);                
+        weatherList.push(<WeatherCard key={`${weatherRaw['main']}-${i}`} index={i} icon={weather.icon} date={weather.date} temperature={weather.temperature} onClick={(index) => handleClick(index)}/>);        
+    }    
     return(
-        <div className="weather-board">
+        <div className="weather-board" style={{backgroundColor: backgroundColor}}>
             {currentWeather && <MainWeather icon={currentWeather.icon} date={currentWeather.date} temperature={currentWeather.temperature} description={currentWeather.description}/>}
             <div className="weather-list">
-                {weatherList}                
+                {weatherList}                             
             </div>
         </div>
     );
 }
 
 function setWeather(weatherRaw){
-    let icon = setWeatherIcon(weatherRaw['main']);
+    let weatherInfo = getWeatherInfo(weatherRaw['main']);
+    let icon = weatherInfo['icon'];
+    let background = weatherInfo['background'];
     let date = weatherRaw['date'];
     let temperature = convertToCelsius(weatherRaw['temperature']);
-    let description = weatherRaw['description'];
+    let description = weatherRaw['description'].toUpperCase();
     return {
         icon: icon,
         date: date,
         temperature: temperature,
-        description: description
+        description: description,
+        background: background,
     };
 }
 
-function setWeatherIcon(weatherMain) {
+function getWeatherInfo(weatherMain) {
     const main = weatherMain.toLowerCase();
     const keys = Object.keys(WEATHER);
     for(let key of keys) {
