@@ -3,7 +3,7 @@ import MainWeather from './MainWeather';
 import '../assets/css/weather-board.scss';
 import { useEffect, useState } from 'react';
 import { WeatherApi } from '../app/api/weather.api';
-import { WEATHER } from '../constants/weather';
+import { WEATHER } from '../constants/weather.constant';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectBackground, setBackground } from './../app/weatherSlice';
 
