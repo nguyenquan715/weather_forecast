@@ -12,75 +12,74 @@ function WeatherBoard(props) {
     const [weatherForecastInfo, setWeatherForecastInfo] = useState([]);
     const [currentWeather, setCurrentWeather] = useState({});
     const background = useSelector(selectBackground);
-    const dispatch = useDispatch();  
+    const dispatch = useDispatch();
     
     useEffect(() => {
         WeatherApi.getWeatherForecast()
-        .then((response) => { 
-            let mockWeatherForecast = [];
-            for(let weatherInfo of response.data['list']) {
-                if(weatherInfo['dt_txt'].split(' ')[1] === '09:00:00'){
-                    mockWeatherForecast.push({
-                        date: weatherInfo['dt_txt'].split(' ')[0],
-                        temperature: weatherInfo.main['temp'],
-                        main: weatherInfo.weather[0]['main'],
-                        description: weatherInfo.weather[0]['description']
-                    });
-                }
-            }
-            console.log(mockWeatherForecast);
-            setWeatherForecastInfo(mockWeatherForecast);
-            const weather = setWeather(mockWeatherForecast[0]);
-            setCurrentWeather(weather);            
-            dispatch(setBackground(weather['background']));            
-        })
-        .catch((err) => {
-            console.log(err);                
-        });
-    }, [dispatch]);
+            .then((response) => {
+                const mockWeatherForecast = response.data['list']
+                                                .filter(weatherInfo => weatherInfo['dt_txt'].split(' ')[1] === '09:00:00')
+                                                .map(weatherInfo => {
+                                                    const weather = {
+                                                        date: weatherInfo['dt_txt'].split(' ')[0],
+                                                        temperature: weatherInfo.main['temp'],
+                                                        main: weatherInfo.weather[0]['main'],
+                                                        description: weatherInfo.weather[0]['description']
+                                                    };
+                                                    return weather;
+                                                });                    
+                console.log(mockWeatherForecast);
+                setWeatherForecastInfo(mockWeatherForecast);
+                const weather = setWeather(mockWeatherForecast[0]);
+                setCurrentWeather(weather);
+                dispatch(setBackground(weather['background']));
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
 
-    const handleClick = (index) => {        
-        let weatherRaw = weatherForecastInfo[index];
+    function handleClickWeatherCard(index) {        
+        const weatherRaw = weatherForecastInfo[index];
         const weather = setWeather(weatherRaw);
         setCurrentWeather(weather);
         dispatch(setBackground(weather['background']));
-    }    
-
-    const weatherList = [];    
-    for(let i=0; i<weatherForecastInfo.length; i++) { 
-        let weatherRaw = weatherForecastInfo[i];
-        const weather = setWeather(weatherRaw);                
-        weatherList.push(<WeatherCard key={`${weatherRaw['main']}-${i}`} icon={weather.icon} date={weather.date} temperature={weather.temperature} onClick={() => handleClick(i)}/>);        
-    }    
+    }
+    
     return(
         <div className="weather-board" style={{backgroundImage: `url(${background})`}}>
             {currentWeather && <MainWeather icon={currentWeather.icon} date={currentWeather.date} temperature={currentWeather.temperature} description={currentWeather.description}/>}
             <div className="weather-list">
-                {weatherList}                             
+                {
+                    weatherForecastInfo.map((weatherRaw, index) => {
+                        const weather = setWeather(weatherRaw);
+                        return <WeatherCard key={`${weatherRaw['main']}-${index}`} icon={weather.icon} date={weather.date} temperature={weather.temperature} onClick={() => handleClickWeatherCard(index)}/>;
+                    })
+                }                             
             </div>
         </div>
     );
 }
 
 function setWeather(weatherRaw){
-    let weatherInfo = getWeatherInfo(weatherRaw['main']);
-    let icon = weatherInfo['icon'];
-    let background = weatherInfo['background'];
-    let date = weatherRaw['date'];
-    let temperature = convertToCelsius(weatherRaw['temperature']);
-    let description = weatherRaw['description'].toUpperCase();
+    const weatherInfo = getWeatherInfo(weatherRaw['main']);
+    const icon = weatherInfo['icon'];
+    const background = weatherInfo['background'];
+    const date = weatherRaw['date'];
+    const temperature = convertToCelsius(weatherRaw['temperature']);
+    const description = weatherRaw['description'].toUpperCase();
     return {
-        icon: icon,
-        date: date,
-        temperature: temperature,
-        description: description,
-        background: background,
+        icon,
+        date,
+        temperature,
+        description,
+        background,
     };
 }
 
 function getWeatherInfo(weatherMain) {
     const main = weatherMain.toLowerCase();
-    const keys = Object.keys(WEATHER);
+    const keys = Object.keys(WEATHER);    
     for(let key of keys) {
         if(main.includes(key)) {
             return WEATHER[key];
