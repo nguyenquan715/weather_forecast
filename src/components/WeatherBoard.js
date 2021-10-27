@@ -50,7 +50,7 @@ function WeatherBoard(props) {
     for(let i=0; i<weatherForecastInfo.length; i++) { 
         let weatherRaw = weatherForecastInfo[i];
         const weather = setWeather(weatherRaw);                
-        weatherList.push(<WeatherCard key={`${weatherRaw['main']}-${i}`} index={i} icon={weather.icon} date={weather.date} temperature={weather.temperature} onClick={(index) => handleClick(index)}/>);        
+        weatherList.push(<WeatherCard key={`${weatherRaw['main']}-${i}`} icon={weather.icon} date={weather.date} temperature={weather.temperature} onClick={() => handleClick(i)}/>);        
     }    
     return(
         <div className="weather-board" style={{backgroundImage: `url(${background})`}}>
