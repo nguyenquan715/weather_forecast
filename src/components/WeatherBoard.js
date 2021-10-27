@@ -19,7 +19,7 @@ function WeatherBoard(props) {
         .then((response) => { 
             let mockWeatherForecast = [];
             for(let weatherInfo of response.data['list']) {
-                if(weatherInfo['dt_txt'].split(' ')[1] === '06:00:00'){
+                if(weatherInfo['dt_txt'].split(' ')[1] === '09:00:00'){
                     mockWeatherForecast.push({
                         date: weatherInfo['dt_txt'].split(' ')[0],
                         temperature: weatherInfo.main['temp'],
