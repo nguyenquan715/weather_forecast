@@ -1,7 +1,7 @@
 import '../assets/css/weather-main.scss';
 import '../assets/css/weather-icons.min.css';
 
-function MainWeather(props) {
+export const MainWeather = (props) => {
     return(
         <div className="weather-main">
             <div className="weather-icon">
@@ -21,5 +21,3 @@ function MainWeather(props) {
         </div>
     )
 }
-
-export default MainWeather;

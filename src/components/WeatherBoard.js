@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectBackground, setBackground } from './../app/weatherSlice';
 
 
-function WeatherBoard(props) {
+export const WeatherBoard = (props) => {
     const [weatherForecastInfo, setWeatherForecastInfo] = useState([]);
     const [currentWeather, setCurrentWeather] = useState({});
     const background = useSelector(selectBackground);
@@ -39,7 +39,7 @@ function WeatherBoard(props) {
             });
     }, []);
 
-    function handleClickWeatherCard(index) {        
+    const handleClickWeatherCard = (index) => {        
         const weatherRaw = weatherForecastInfo[index];
         const weather = setWeather(weatherRaw);
         setCurrentWeather(weather);
@@ -61,7 +61,7 @@ function WeatherBoard(props) {
     );
 }
 
-function setWeather(weatherRaw){
+const setWeather = (weatherRaw) => {
     const weatherInfo = getWeatherInfo(weatherRaw['main']);
     const icon = weatherInfo['icon'];
     const background = weatherInfo['background'];
@@ -77,7 +77,7 @@ function setWeather(weatherRaw){
     };
 }
 
-function getWeatherInfo(weatherMain) {
+const getWeatherInfo = (weatherMain) => {
     const main = weatherMain.toLowerCase();
     const keys = Object.keys(WEATHER);    
     for(let key of keys) {
@@ -88,8 +88,6 @@ function getWeatherInfo(weatherMain) {
     return WEATHER['default'];
 }
 
-function convertToCelsius(kelvin){
+const convertToCelsius = (kelvin) => {
     return Math.floor(kelvin - 273.15);
 }
-
-export default WeatherBoard;

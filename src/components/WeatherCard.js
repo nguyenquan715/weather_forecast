@@ -1,7 +1,7 @@
 import '../assets/css/weather-card.scss';
 import '../assets/css/weather-icons.min.css';
 
-function WeatherCard(props) {
+export const WeatherCard = (props) => {
     return(
         <div className="weather-card" onClick={() => props.onClick()}>
             <div className="weather-icon">
@@ -18,5 +18,3 @@ function WeatherCard(props) {
         </div>
     );
 }
-
-export default WeatherCard;
