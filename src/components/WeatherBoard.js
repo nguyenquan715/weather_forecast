@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectBackground, setBackground } from './../app/weatherSlice';
 
 
-export const WeatherBoard = (props) => {
+export default function WeatherBoard(props) {
     const [weatherForecastInfo, setWeatherForecastInfo] = useState([]);
     const [currentWeather, setCurrentWeather] = useState({});
     const background = useSelector(selectBackground);

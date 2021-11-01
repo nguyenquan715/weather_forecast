@@ -1,7 +1,7 @@
 import '../assets/css/weather-card.scss';
 import '../assets/css/weather-icons.min.css';
 
-export const WeatherCard = (props) => {
+export default function WeatherCard(props) {
     return(
         <div className="weather-card" onClick={() => props.onClick()}>
             <div className="weather-icon">

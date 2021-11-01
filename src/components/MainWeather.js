@@ -1,7 +1,7 @@
 import '../assets/css/weather-main.scss';
 import '../assets/css/weather-icons.min.css';
 
-export const MainWeather = (props) => {
+export default function MainWeather(props) {
     return(
         <div className="weather-main">
             <div className="weather-icon">
